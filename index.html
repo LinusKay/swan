@@ -3,7 +3,7 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Lorem</title>
+        <title>Swan - Spans that Swap</title>
         <style>
         :root {
             /* Theme: Forest */
@@ -12,12 +12,6 @@
             --theme-colour-highlight: #AAAE7F;
             --theme-colour-dark: #143109;
             --theme-colour-note: green;
-
-            /* Theme: Alien */
-            /* --theme-colour-background-code: #D3FCD5;
-            --theme-colour-background: #98A6D4;
-            --theme-colour-highlight: #C2F970;
-            --theme-colour-dark: #44344F; */
 
             /* Theme: Swan */
             --theme-colour-background-code: #EBEBEB;
@@ -44,6 +38,10 @@
         h1,h2 {
             font-family: ENGR;
         }
+        .description {
+            width:360px;
+            white-space: normal;
+        }
         .swan {
             background: var(--theme-colour-highlight);
             padding: 3px;
@@ -51,6 +49,10 @@
             cursor:pointer;
             display:inline-block;
             margin-bottom:-6px;
+        }
+        .swan-snap {
+            display:inline;
+            white-space: normal;
         }
         .swan-slide {
             width:130px;
@@ -154,32 +156,32 @@
     </head>
     <body>
         <h1 class="title swan swan-slide" data-swan-options="swan|spANs that SWap"></h1>
-        <br>
+        <p class="description">simple elements that change their contents upon interaction. designed for when you just can't <span class="swan swan-snap" data-swan-options="find the right word|bear to throw it away|decide">decide.</span></p>
         <!-- <h2 class="swan swan-snap" data-swan-options="Sudden|Immediate|Snap">Snap</h2> -->
          <h2>Snap</h2>
         <p>
-            Swan 
+            swan 
             <span class="swan swan-snap" data-swan-options="elements|blocks">blocks </span> 
             can be clicked to show new 
             <span class="swan swan-snap" data-swan-options="words, or even entire sentences|words">words.</span>
-            Using the <b>swan-snap</b> class, this change will be instant!
+            using the <b>swan-snap</b> class, this change will be instant!
         </p>
         <p class="code">
-            &lt;p&gt;Snap <b>&lt;span class="swan swan-snap" data-swan-options="elements|blocks"&gt;blocks&lt;/span&gt;</b> 
+            &lt;p&gt;snap <b>&lt;span class="swan swan-snap" data-swan-options="elements|blocks"&gt;blocks&lt;/span&gt;</b> 
             can be clicked to show new 
             <b>&lt;span class="swan swan-snap" data-swan-options="words, or even entire sentences|words"&gt;words.&lt;/span&gt;</b>
             Using the &lt;b&gt;swan-snap&lt;/b&gt; class, this change will be instant!&lt;/p&gt;
         </p>
 
         <!-- <h2 class="swan swan-slide" data-swan-options="Slide|Shift|Scroll"></h2> -->
-        <h2>Slide</h2>
+        <h2>slide</h2>
         <p>
-            Slide elements work very similarly, except with 
+            elements with the swan-slide class work very similarly, except with 
             <span class="swan swan-slide" data-swan-options="some nice sliding animations|style"></span>
             Wow! Look at all that movement.
         </p>
         <p class="code">
-            &lt;p&gt;Slide elements work very similarly, except with <b>&lt;span
+            &lt;p&gt;slide elements work very similarly, except with <b>&lt;span
                 class="swan swan-slide"
                 data-swan-options="some nice sliding animations|style"&gt;&lt;/span&gt;</b>
             Wow! Look at all that movement.&lt;/p&gt;
