@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Lorem</title>
+        <style>
+        :root {
+            /* Theme: Forest */
+            --theme-colour-background-code: #F7F7F7;
+            --theme-colour-background: #D0D6B3;
+            --theme-colour-highlight: #AAAE7F;
+            --theme-colour-dark: #143109;
+            --theme-colour-note: green;
+
+            /* Theme: Alien */
+            /* --theme-colour-background-code: #D3FCD5;
+            --theme-colour-background: #98A6D4;
+            --theme-colour-highlight: #C2F970;
+            --theme-colour-dark: #44344F; */
+
+            /* Theme: Swan */
+            --theme-colour-background-code: #EBEBEB;
+            --theme-colour-background: BFD7FF;
+            --theme-colour-highlight: #F28F3B;
+            --theme-colour-dark: #2C302E;
+        }
+        
+        @font-face {
+            font-family: corbel;
+            src: url('corbel.ttf');
+        }
+        @font-face {
+            font-family: ENGR;
+            src: url('ENGR.TTF');
+        }
+        body {
+            font-family: corbel;
+            font-size:14px;
+            background: var(--theme-colour-background);
+            color:var(--theme-colour-dark);
+            padding:25px;
+        }
+        h1,h2 {
+            font-family: ENGR;
+        }
+        .swan {
+            background: var(--theme-colour-highlight);
+            padding: 3px;
+            border-radius:3px;
+            cursor:pointer;
+            display:inline-block;
+            margin-bottom:-6px;
+        }
+        .swan-slide {
+            width:130px;
+            text-wrap: nowrap;
+            overflow:hidden;
+            /* margin-bottom:-6px; */
+            transition: width 1s ease, transform .2s ease;
+        }
+        .swan-slide span {
+            transition: margin 1s;
+            margin-right:10px;
+        }
+        .code {
+            background: var(--theme-colour-background-code);
+            border: solid 1px var(--theme-colour-highlight);
+            border-radius:3px;
+            /* font-family:'Courier New', Courier, monospace; */
+            padding:5px;
+        }
+        .note {
+            color:var(--theme-colour-note);
+            opacity:0.5;
+        }
+        .note::before {
+            content:"<!-- ";
+        }
+        .note::after {
+            content:" -->"
+        }
+    </style>
+        <script>
+        window.addEventListener("load", () => {
+            // setup snap swans
+            const swanElements = document.querySelectorAll(".swan-snap");
+            swanElements.forEach(swan => {
+                swan.addEventListener("click", () => changeText(swan));
+                
+            });
+            // setup slide swans
+            // converts data-swan-options into span elements
+            const swanSlideElements = document.querySelectorAll(".swan-slide");
+            swanSlideElements.forEach(swan => {
+                const options = swan.dataset.swanOptions.split("|");
+
+                options.forEach(option => {
+                    const optionSpan = document.createElement("span");
+                    optionSpan.innerText = option;
+                    swan.appendChild(optionSpan);
+                    // Set the width of the span to show only the first option
+                    if(swan.style.width=="") swan.style.width = optionSpan.getBoundingClientRect().width + "px";
+                });
+
+                // This prevents the slide-on-load effect which gives the surprise away!
+                // Temporarily disable transitions for the initial width setting
+                swan.style.transition = 'none';
+                
+                // Re-enable transitions after a short delay
+                setTimeout(() => {
+                    swan.style.transition = 'width 1s ease, transform .2s ease';
+                }, 0); 
+
+                swan.addEventListener("click", () => changeTextSlide(swan));
+            });
+        });
+    
+        // Immediately replace text with next option
+        // Used in snap swans
+        function changeText(swan) {
+            const currentText = swan.innerText;
+            const options = swan.dataset.swanOptions.split("|");
+            const currentOption = options.indexOf(currentText);
+            const nextOptionIndex = (currentOption + 1) % options.length;
+            swan.innerHTML = options[nextOptionIndex];
+        }
+
+        // Shift the current option
+        // Used in slide swans
+        function changeTextSlide(swan) {
+            const spans = swan.getElementsByTagName("span");
+            const separationOffset = 10;
+
+            const firstSpan = spans[0];
+            const firstSpanWidth = firstSpan.getBoundingClientRect().width;
+            const marginOffset = firstSpanWidth + separationOffset;
+
+            const secondSpan = spans[1];
+            const secondSpanWidth = secondSpan.getBoundingClientRect().width;
+            swan.style.width = secondSpanWidth + "px";
+
+            // Move the first span off-screen
+            firstSpan.style.marginLeft = -marginOffset + "px";
+
+            // After the transition ends, append the first span back to the end
+            setTimeout(() => {
+                firstSpan.removeAttribute("style"); 
+                swan.appendChild(firstSpan); 
+            }, 1000);
+        }
+
+    </script>
+    </head>
+    <body>
+        <h1 class="title swan swan-slide" data-swan-options="swan|spANs that SWap"></h1>
+        <br>
+        <!-- <h2 class="swan swan-snap" data-swan-options="Sudden|Immediate|Snap">Snap</h2> -->
+         <h2>Snap</h2>
+        <p>
+            Swan 
+            <span class="swan swan-snap" data-swan-options="elements|blocks">blocks </span> 
+            can be clicked to show new 
+            <span class="swan swan-snap" data-swan-options="words, or even entire sentences|words">words.</span>
+            Using the <b>swan-snap</b> class, this change will be instant!
+        </p>
+        <p class="code">
+            &lt;p&gt;Snap <b>&lt;span class="swan swan-snap" data-swan-options="elements|blocks"&gt;blocks&lt;/span&gt;</b> 
+            can be clicked to show new 
+            <b>&lt;span class="swan swan-snap" data-swan-options="words, or even entire sentences|words"&gt;words.&lt;/span&gt;</b>
+            Using the &lt;b&gt;swan-snap&lt;/b&gt; class, this change will be instant!&lt;/p&gt;
+        </p>
+
+        <!-- <h2 class="swan swan-slide" data-swan-options="Slide|Shift|Scroll"></h2> -->
+        <h2>Slide</h2>
+        <p>
+            Slide elements work very similarly, except with 
+            <span class="swan swan-slide" data-swan-options="some nice sliding animations|style"></span>
+            Wow! Look at all that movement.
+        </p>
+        <p class="code">
+            &lt;p&gt;Slide elements work very similarly, except with <b>&lt;span
+                class="swan swan-slide"
+                data-swan-options="some nice sliding animations|style"&gt;&lt;/span&gt;</b>
+            Wow! Look at all that movement.&lt;/p&gt;
+        </p>
+    </body>
+</html>
